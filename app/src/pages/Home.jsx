@@ -1,19 +1,26 @@
 import { Link } from "react-router-dom"
+import logo from '../assets/RJ.png'
+
+
 
 function Home() {
   return (
     <div className="container mx-auto px-4">
-      <section className="py-20 text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to RJ Global Group</h1>
-        <p className="text-xl mb-8 text-secondary">Innovative solutions across technology, media, and real estate</p>
-        <div className="space-x-4">
-          <Link to="/services" className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600">
-            Explore Services
-          </Link>
-          <Link to="/contact" className="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600">
-            Get in Touch
-          </Link>
-        </div>
+      <section className="flex items-center justify-center py-20 "> 
+        <div>
+            <h1 className="text-4xl font-bold mb-4">Welcome to RJ Global Group</h1>
+            <p className="text-xl mb-8 text-secondary">Innovative solutions across technology, media, and real estate</p>
+            <div className="space-x-4">
+            <Link to="/services" className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600">
+                Explore Services
+            </Link>
+            <Link to="/contact" className="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600">
+                Get in Touch
+            </Link>
+            </div>
+        </div> 
+        
+        <img src={logo} alt="RJ Global Group" className="mix-blend-multiply" />
       </section>
 
       <section className="py-12">

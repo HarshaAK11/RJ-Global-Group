@@ -63,6 +63,11 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    font-family: "Rubik", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: #F7F5F4;
   }
 }
+
+

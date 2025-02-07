@@ -5,7 +5,7 @@ function Home() {
     <div className="container mx-auto px-4">
       <section className="py-20 text-center">
         <h1 className="text-4xl font-bold mb-4">Welcome to RJ Global Group</h1>
-        <p className="text-xl mb-8">Innovative solutions across technology, media, and real estate</p>
+        <p className="text-xl mb-8 text-secondary">Innovative solutions across technology, media, and real estate</p>
         <div className="space-x-4">
           <Link to="/services" className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600">
             Explore Services

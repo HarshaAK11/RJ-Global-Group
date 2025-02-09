@@ -1,40 +1,39 @@
 import { Link } from "react-router-dom"
 import logo from '../assets/RJ.png'
-
+import { cn } from "@/lib/utils";
+import { DotPattern } from "../components/magicui/dot-pattern";
 
 
 function Home() {
   return (
-    <div className="container mx-auto px-4">
-      <section className="flex items-center justify-center py-20 "> 
-        <div>
-            <h1 className="text-4xl font-bold mb-4">Welcome to RJ Global Group</h1>
-            <p className="text-xl mb-8 text-secondary">Innovative solutions across technology, media, and real estate</p>
+    <div>
+
+      <section className="relative h-screen flex items-center mx-20"> 
+        <div className="flex-1 px-16">
+            <h1 className="text-5xl mb-8">Transforming<br/>Visions into Success Stories</h1>
+            <p className="text-xl mb-8 text-secondary">Your one-stop destination for tech, creative, and business solutions that drive growth</p>
+            
             <div className="space-x-4">
-            <Link to="/services" className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600">
-                Explore Services
-            </Link>
-            <Link to="/contact" className="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600">
-                Get in Touch
-            </Link>
+                <Link to="/services" className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600">
+                    Explore Services
+                </Link>
+                <Link to="/contact" className="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600">
+                    Get in Touch
+                </Link>
             </div>
         </div> 
-        
-        <img src={logo} alt="RJ Global Group" className="mix-blend-multiply" />
-      </section>
 
-      <section className="py-12">
-        <h2 className="text-3xl font-bold mb-6 text-center">About RJ Global Group</h2>
-        <p className="text-lg mb-4">
-          RJ Global Group is a dynamic conglomerate offering innovative solutions across various sectors. We combine
-          expertise in technology, media production, digital marketing, and real estate to deliver comprehensive
-          services tailored to our clients' needs.
-        </p>
-        <div className="text-center">
-          <Link to="/about" className="text-blue-500 hover:underline">
-            Read More
-          </Link>
+        <div className="flex-1">
+          <img src={logo} alt="RJ Logo" className="w-full h-full object-cover mix-blend-multiply" /> 
         </div>
+
+        <DotPattern
+
+            className={cn(
+            "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]",
+            )}
+        />
+
       </section>
 
       <section className="py-12">

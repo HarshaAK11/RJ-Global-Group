@@ -157,17 +157,20 @@ function Home() {
       {/* Why Choose Us Section */} 
       <section className="p-16 h-screen">
 
-          <div 
-            className=""
-            style={{
-              backgroundImage: `url(${whyUsBg})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-            }}
-          >
-hi
+        <div className="relative w-full h-full">
+
+          <img src={whyUsBg} alt="why us" className="absolute inset-0 w-full h-full object-cover rounded-3xl" />
+
+          <div className="absolute flex flex-col gap-6 h-[380px] w-[600px] left-0 bottom-0 m-10 bg-white rounded-3xl p-8"> 
+              <p className="text-lg border-[1px] font-md w-fit py-1 px-4 border-black rounded-full">Why choose us</p>
+              <p className="text-5xl leading-tight">Delivering innovative, tailored solutions with excellence and expertise.</p> 
           </div>
+
+        </div>
+
+          
+
+        
 
         {/*<h2 className="text-3xl font-bold mb-6 text-center">Why Choose Us?</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

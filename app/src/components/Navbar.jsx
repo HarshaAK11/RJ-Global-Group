@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import earth from "../assets/earth.png"
 import { ArrowRight } from "lucide-react"
 import gsap from "gsap"
@@ -16,12 +16,16 @@ const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [isDarkSection, setIsDarkSection] = useState(false);
+    const [isTransparent, setIsTransparent] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
-    // Check dark sections immediately on route change or scroll
-    const checkDarkSections = () => {
+    // dark and transparent section check
+    const checkSections = () => {
         const darkSections = document.querySelectorAll('.dark-section');
+        const transparentSections = document.querySelectorAll('.transparent-section');
         let isOverDarkSection = false;
+        let isOverTransparentSection = false;
 
         darkSections.forEach(section => {
             const rect = section.getBoundingClientRect();
@@ -30,12 +34,20 @@ const Navbar = () => {
             }
         });
 
+        transparentSections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= 90 && rect.bottom >= 0) {
+                isOverTransparentSection = true;
+            }
+        });
+
         setIsDarkSection(isOverDarkSection);
+        setIsTransparent(isOverTransparentSection);
     };
 
     // Run on route changes
     useEffect(() => {
-        setTimeout(checkDarkSections, 0);
+        setTimeout(checkSections, 0);
     }, [location.pathname]);
 
     // Run on scroll
@@ -53,7 +65,7 @@ const Navbar = () => {
                 }
             }
 
-            checkDarkSections();
+            checkSections();
 
             // Footer visibility logic
             const footer = document.querySelector('footer');
@@ -101,6 +113,7 @@ const Navbar = () => {
 
     const arrowRef = useRef(null)
 
+    // Button hover animation
     const handleArrowEnter = () => {
         const arrow  = arrowRef.current
 
@@ -113,6 +126,7 @@ const Navbar = () => {
 
     }
 
+    // Button leave animation
     const handleArrowLeave = () => {
         const arrow = arrowRef.current
 
@@ -125,20 +139,44 @@ const Navbar = () => {
 
     }
 
+    const handleNavigation = (path, e) => {
+        e.preventDefault();
+        
+        // Animate current page up
+        gsap.to('.page-content', {
+          y: '-100%',
+          duration: 0.6,
+          ease: 'power4.inOut',
+          onComplete: () => {
+            navigate(path);
+            window.scrollTo(0, 0);
+          }
+        });
+    };
+
     return (
         <nav 
             className={`fixed w-full flex justify-between items-center z-[99] px-20 transition-all duration-300 
                 ${isScrolled ? 'text-[1rem] h-[60px]' : 'text-[1.2rem] h-[90px]'}
                 ${isVisible ? 'translate-y-0' : '-translate-y-full'}
-                ${isDarkSection ? 'bg-[#171717] text-white' : 'bg-white text-black'}
+                ${isTransparent 
+                    ? 'bg-transparent text-white' 
+                    : isDarkSection 
+                        ? 'bg-[#171717] text-white' 
+                        : 'bg-white text-black'
+                }
             `}
         >
 
             <ul className="flex items-center space-x-10 px-2">
                 <li className="mr-10">
-                    <img src={earth} alt="earth" className={`transition-all duration-300 
-                        ${isScrolled ? 'w-8 h-8' : 'w-10 h-10'}
-                    `}/>
+                    <img 
+                        src={earth} 
+                        alt="earth" 
+                        className={`transition-all duration-300 
+                            ${isScrolled ? 'w-8 h-8' : 'w-10 h-10'}
+                        `}
+                    />
                 </li>
                 {navLinks.map((link, index) => (
                     <li className="overflow-hidden">
@@ -150,6 +188,7 @@ const Navbar = () => {
                             }`} 
                             onMouseEnter={() => handleLinkEnter(index)} 
                             onMouseLeave={() => handleLinkLeave(index)}
+                            onClick={(e) => handleNavigation(link.path, e)}
                         >
                             <p>{link.name}</p>
                             <p>{link.name}</p>
@@ -163,7 +202,7 @@ const Navbar = () => {
                 onMouseEnter={() => handleArrowEnter()} 
                 onMouseLeave={() => handleArrowLeave()} 
                 className={`relative rounded-full flex items-center gap-2 transition-all duration-300 group overflow-hidden
-                    ${isDarkSection 
+                    ${isTransparent || isDarkSection
                         ? 'bg-white text-black hover:bg-[#f0ff75]' 
                         : 'bg-black text-white hover:bg-[#f0ff75] hover:text-black'
                     }

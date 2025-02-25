@@ -1,6 +1,9 @@
+import { React, useEffect, useRef } from 'react'
 import { Link } from "react-router-dom"
 import { ArrowDown } from "lucide-react"
-import hero from '../assets/division heo.png'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import hero from '../assets/hero.mp4'
 
 const divisions = [
   {
@@ -20,10 +23,37 @@ const divisions = [
   },
 ]
 
-function Divisions() {
-  return (
-    <div>
+gsap.registerPlugin(ScrollTrigger)
 
+function Divisions() {
+  const divisionRefs = useRef([]);
+
+  // Division box animation
+  useEffect(() => {
+    divisionRefs.current.forEach((div, index) => {
+      if (index < divisionRefs.current.length - 1) {
+        gsap.to(div, {
+          scale: 0.8,
+          filter: "blur(4px)",
+          opacity: 0.6,
+          scrollTrigger: {
+            trigger: divisionRefs.current[index + 1],
+            start: "top 80%",
+            end: "top 20%",
+            scrub: 1,
+            toggleActions: "play reverse play reverse",
+          }
+        });
+      }
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(st => st.kill());
+    };
+  }, []);
+
+  return (
+    <div className="page-content">
       <style>
         {`
           .numbered-list {
@@ -39,17 +69,44 @@ function Divisions() {
             
             margin-right: 0.5rem;
           }
+          .division {
+            transition: background-color 0.5s ease;
+          }
         `}
       </style>
 
       {/* Hero section */}
-      <section className="dark-section h-[100vh] w-full bg-[#171717] text-white flex flex-col items-center justify-center p-16 uppercase">
-        <h1>The world is changing.</h1>
-        <h1>The real question is</h1>
-        <h1 className="text-6xl mb-8">are you <span className="text-[#606060]">leading</span> or <span className="text-[#606060]">following?</span></h1>
-        <img src={hero} alt="Hero-image" className="w-20 " />
-        <p className="text-2xl">At RJ Global Group, we don't wait for the future. We create it.</p>
-        <p className="text-xl flex gap-2"><ArrowDown className="text-[#606060]"/>Scroll to explore our divisions & discover what's next.</p>
+      <section className="transparent-section h-[100vh] w-full bg-[#171717] text-white relative overflow-hidden">
+
+        {/* Video Background */}
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-40 "
+        >
+          <source src={hero} type="video/mp4" />
+        </video>
+
+        {/* Content */} 
+        <div className="relative z-10 h-full flex flex-col gap-6 items-center justify-center p-16 ">
+
+          <div className='flex gap-10 text-2xl'>
+            <h1>The world is changing</h1>
+            <span>-</span>
+            <h1>The real question is</h1>
+          </div>
+          
+          <h1 className="text-7xl uppercase">are you leading or following?</h1>
+          <p className="text-4xl">At RJ Global Group, we don't wait for the future. We create it.</p>
+          <p className="absolute bottom-6 text-xl flex gap-2">
+            <ArrowDown className="text-[#f0ff75]"/>
+            Scroll to explore our divisions & discover what's next.
+          </p>
+
+        </div>
+        
       </section>
 
       { /* Divisions */}
@@ -61,7 +118,8 @@ function Divisions() {
           {divisions.map((division, index) => (
             <div 
               key={division.name} 
-              className="h-fit flex justify-between mb-[200px] sticky top-[20%] bg-[#171717] p-8"
+              ref={el => divisionRefs.current[index] = el}
+              className="division h-fit flex justify-between mb-[200px] sticky top-[20%] bg-[#171717] p-8"
               style={{
                 zIndex: index + 1 
               }}
@@ -117,7 +175,6 @@ function Divisions() {
         </div>
 
       </section>
-
     </div>
   )
 }

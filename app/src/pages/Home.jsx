@@ -25,6 +25,11 @@ function Home() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
 
+    // Disable ScrollTrigger markers globally
+    ScrollTrigger.defaults({
+      markers: false
+    });
+
     // Why Us main content animation 
     gsap.fromTo(whyUsContentRef.current,
       {
@@ -263,4 +268,3 @@ function Home() {
 }
 
 export default Home
-

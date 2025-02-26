@@ -1,74 +1,94 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import Sagar from "../assets/Sagar.jpg";
 import harshaImage from "../assets/HarshaAdithyaKumar.jpg";
+import Rohan from "../assets/Rohan.jpg";
 
 const teamMembers = [
-  { name: "Sagar K", role: "CTO", image: Sagar },
-  { name: "Harsha AdithyaKumar", role: "CTO", image: harshaImage },
-  { name: "Mike Johnson", role: "Creative Director", image: "/placeholder.svg" },
-  { name: "Sarah Brown", role: "Marketing Head", image: "/placeholder.svg" },
+  { 
+    name: "Rohan", 
+    role: "CEO", 
+    image: Rohan,
+    linkedin: "https://www.linkedin.com/in/rohanrjedu/", 
+    instagram: "https://www.instagram.com/_its_rj_2" 
+  },
+  { 
+    name: "Sagar K", 
+    role: "CTO", 
+    image: Sagar,
+    linkedin: "https://linkedin.com/in/sagarkpoojary", 
+    instagram: "https://instagram.com/sagarrpoojaryy" 
+  },
+  { 
+    name: "Harsha AdithyaKumar", 
+    role: "CIO", 
+    image: harshaImage,
+    linkedin: "https://linkedin.com/in/harsha", 
+    instagram: "https://instagram.com/harsha" 
+  },
+  { 
+    name: "Placeholder", 
+    role: "Marketing Head", 
+    image: "/placeholder.svg",
+    linkedin: "#", 
+    instagram: "#" 
+  },
 ];
 
 const About = () => {
   return (
-    <div className="bg-[#F7F5F4] text-gray-900">
+    <div className="bg-gray-200 text-gray-900" style={{ backgroundImage: "radial-gradient(darkgray 2%, transparent 3%)", backgroundSize: "10px 10px" }}>
       {/* Hero Section */}
       <motion.section
-        className="bg-[#556B2F] text-white py-20 text-center"
+        className="bg-gray-800 text-white py-32 text-center"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h1 className="text-5xl font-bold">About RJ Global Group</h1>
-        <p className="mt-4 text-lg max-w-2xl mx-auto">
+        <motion.h1 className="text-5xl font-bold flex justify-center">
+          {"About R J Global Group".split(" ").map((word, wordIndex) => (
+            <span key={wordIndex} className="mr-2">
+              {word.split("").map((char, charIndex) => (
+                <motion.span 
+                  key={charIndex} 
+                  whileHover={{ y: -5 }} 
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </span>
+          ))}
+        </motion.h1>
+      </motion.section>
+
+      {/* Mission Statement Section */}
+      <motion.section className="py-16 text-center" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}>
+        <p className="mt-4 text-lg max-w-2xl mx-auto text-gray-300">
           Innovating for a better future with expertise in technology, media, digital marketing, and real estate.
+        </p>
+        <p className="mt-4 text-lg max-w-2xl mx-auto text-gray-300">
+          At R J Global Group, we believe in harnessing the power of innovation to create solutions that not only meet the needs of today but also pave the way for a sustainable tomorrow.
         </p>
       </motion.section>
 
-      {/* Who We Are */}
-      <section className="container mx-auto px-6 py-16">
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <h2 className="text-4xl font-semibold text-[#556B2F]">Who We Are</h2>
-          <p className="mt-4 text-lg text-gray-700 max-w-3xl mx-auto">
-            RJ Global Group is a dynamic conglomerate specializing in innovative solutions across multiple industries.
-            We drive business success through cutting-edge technology and creative expertise.
-          </p>
-        </motion.div>
-      </section>
+      {/* Vision Section */}
+      <motion.section className="py-16 text-center bg-gray-100" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}>
+        <h2 className="text-3xl font-semibold">Our Vision</h2>
+        <p className="mt-4 text-lg max-w-2xl mx-auto text-gray-600">
+          We envision a world where technology and creativity converge to create impactful solutions that enhance lives and drive progress.
+        </p>
+      </motion.section>
 
-      {/* Our Story */}
-      <section className="bg-white py-16">
-        <div className="container mx-auto px-6">
-          <motion.div
-            className="text-center"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <h2 className="text-4xl font-semibold text-[#556B2F]">Our Story</h2>
-            <p className="mt-4 text-lg text-gray-700 max-w-3xl mx-auto">
-              Founded in 2010, we started as an IT consulting firm and expanded into a multi-division powerhouse. Today, we serve global businesses across various industries.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Our Team */}
-      <section className="container mx-auto px-6 py-16">
-        <motion.h2
-          className="text-4xl font-semibold text-center text-[#556B2F]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
+      {/* Team Section */}
+      <motion.section className="container mx-auto px-6 py-16" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.4 }}>
+        <motion.h2 className="text-4xl font-semibold text-center text-gray-800" initial={{ y: -20 }} animate={{ y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}>
           Meet Our Team
         </motion.h2>
+        <p className="mt-4 text-lg max-w-2xl mx-auto text-gray-600 text-center">
+          Our team is a diverse group of passionate individuals, each bringing unique skills and perspectives to the table. Together, we strive to push boundaries and redefine excellence in our fields.
+        </p>
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
           {teamMembers.map((member, index) => (
             <motion.div
@@ -78,17 +98,21 @@ const About = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 + index * 0.2 }}
             >
-              <img
-                src={member.image}
-                alt={member.name}
-                className="w-40 h-40 rounded-full mx-auto mb-4 border-4 border-[#556B2F]"
-              />
-              <h3 className="text-2xl font-semibold">{member.name}</h3>
+              <motion.img src={member.image} alt={member.name} className="w-40 h-40 rounded-full mx-auto mb-4 border-4" />
+              <h3 className="text-xl font-semibold">{member.name}</h3>
               <p className="text-gray-600">{member.role}</p>
+              <div className="mt-4 flex justify-center space-x-4">
+                <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
+                  <FaLinkedin className="text-blue-600 text-2xl" />
+                </a>
+                <a href={member.instagram} target="_blank" rel="noopener noreferrer">
+                  <FaInstagram className="text-pink-600 text-2xl" />
+                </a>
+              </div>
             </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 };

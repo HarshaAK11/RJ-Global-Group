@@ -5,48 +5,12 @@ import gsap from "gsap"
 import { VelocityScroll } from '../components/magicui/scroll-based-velocity'
 
 const Footer = () => {
-    const textRef = useRef(null)
-    const [scrollDirection, setScrollDirection] = useState('down')
-    const lastScrollY = useRef(0)
-
-    useEffect(() => {
-        // Handle scroll direction detection
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY
-            if (currentScrollY > lastScrollY.current) {
-                setScrollDirection('down')
-            } else {
-                setScrollDirection('up')
-            }
-            lastScrollY.current = currentScrollY
-        }
-
-        window.addEventListener('scroll', handleScroll)
-
-        // Infinite scrolling animation
-        const animation = gsap.to(textRef.current, {
-            xPercent: scrollDirection === 'down' ? -25 : 25,
-            duration: 30,
-            ease: "none",
-            repeat: -1
-        })
-
-        // Update animation direction 
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
-            animation.kill()
-        }
-    }, [scrollDirection])
 
     return (
         <footer className="relative w-full h-[110vh] bg-[#171717] text-white px-20 py-10 overflow-hidden">
             {/* Heading Text */}
-            <div className="absolute top-10 whitespace-nowrap">
-                <h1 
-                    className="text-[10rem] font-bold leading-none inline-block"
-                >
-                    <VelocityScroll>Innovate Create Elevate</VelocityScroll>
-                </h1>
+            <div className="absolute left-0 top-10">
+                <VelocityScroll numRows={1} defaultVelocity={1}>Innovate Create Elevate</VelocityScroll>           
             </div>
 
             {/* Main Content */}

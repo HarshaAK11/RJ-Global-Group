@@ -74,7 +74,7 @@ function ParallaxText({
   return (
     (<div
       ref={containerRef}
-      className="w-full overflow-hidden whitespace-nowrap"
+      className="w-full py-8 overflow-hidden whitespace-nowrap"
       {...props}>
       <motion.div className="inline-block" style={{ x }}>
         {Array.from({ length: repetitions }).map((_, i) => (
@@ -97,7 +97,7 @@ export function VelocityScroll({
   return (
     (<div
       className={cn(
-        "relative w-full text-4xl font-bold tracking-[-0.02em] md:text-7xl md:leading-[5rem]",
+        "relative w-full text-7xl tracking-[-0.02em] md:text-[10rem] md:leading-[5rem]",
         className
       )}
       {...props}>

@@ -161,7 +161,7 @@ const About = (props) => {
             </motion.div>
           ))}
         </div>
-      </motion.section>
+      </section>
     </div>
   );
 };

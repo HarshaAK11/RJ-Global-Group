@@ -4,37 +4,12 @@ import logo from "../assets/earth.png";
 import gsap from "gsap";
 
 const Footer = () => {
-    const textRef = useRef(null);
-    const lastScrollY = useRef(0);
-    const [scrollDirection, setScrollDirection] = useState("down");
-
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            setScrollDirection(currentScrollY > lastScrollY.current ? "down" : "up");
-            lastScrollY.current = currentScrollY;
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
-    useEffect(() => {
-        const animation = gsap.fromTo(
-            textRef.current,
-            { xPercent: 0 },
-            { xPercent: -100, duration: 30, ease: "linear", repeat: -1 }
-        );
-        return () => animation.kill();
-    }, []);
 
     return (
         <footer className="relative w-full h-[110vh] bg-[#171717] text-white px-20 py-10 overflow-hidden">
-            {/* Scrolling Heading Text */}
-            <div className="absolute top-10 whitespace-nowrap overflow-hidden w-full">
-                <h1 ref={textRef} className="text-[10rem] font-bold leading-none inline-block">
-                    Innovate Create Elevate • Innovate Create Elevate •
-                </h1>
+            {/* Heading Text */}
+            <div className="absolute left-0 top-10">
+                <VelocityScroll numRows={1} defaultVelocity={1}>Innovate Create Elevate</VelocityScroll>           
             </div>
 
             {/* Main Content */}

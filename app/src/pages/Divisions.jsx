@@ -38,7 +38,7 @@ function Divisions() {
           opacity: 0.6,
           scrollTrigger: {
             trigger: divisionRefs.current[index + 1],
-            start: "top 80%",
+            start: "top bottom",
             end: "top 20%",
             scrub: 1,
             toggleActions: "play reverse play reverse",
@@ -53,7 +53,8 @@ function Divisions() {
   }, []);
 
   return (
-    <div className="page-content">
+    <div>
+      
       <style>
         {`
           .numbered-list {
@@ -98,7 +99,7 @@ function Divisions() {
             <h1>The real question is</h1>
           </div>
           
-          <h1 className="text-7xl uppercase">are you leading or following?</h1>
+          <h1 className="text-7xl font-semibold uppercase">are you <span className='text-[grey]'>leading</span> or <span className='text-[grey]'>following</span>?</h1>
           <p className="text-4xl">At RJ Global Group, we don't wait for the future. We create it.</p>
           <p className="absolute bottom-6 text-xl flex gap-2">
             <ArrowDown className="text-[#f0ff75]"/>
@@ -110,7 +111,7 @@ function Divisions() {
       </section>
 
       { /* Divisions */}
-      <section className="dark-section bg-[#171717] p-16 text-white">
+      <section className="dark-section bg-[#171717] p-16 pt-[150px] text-white">
 
         <h1 className="text-8xl mb-20">Our <span className="text-[#606060]">Divisions.</span></h1>
 

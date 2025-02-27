@@ -1,229 +1,126 @@
-import React, { useState, useEffect, useRef } from "react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
-import earth from "../assets/earth.png"
-import { ArrowRight } from "lucide-react"
-import gsap from "gsap"
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { FaLinkedin, FaInstagram, FaBars, FaTimes } from "react-icons/fa";
+import earth from "../assets/earth.png";
+import { ArrowRight } from "lucide-react";
+import gsap from "gsap";
 
 const Navbar = () => {
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Know Us", path: "/about" },
+    { name: "Divisions", path: "/divisions", dropdown: ["Division 1", "Division 2"] },
+    { name: "Services", path: "/services" },
+  ];
 
-    const navLinks = [
-        { name: 'Home', path: '/' },
-        { name: 'Know Us', path: '/about' },
-        { name: 'Divisions', path: '/divisions' },
-        { name: 'Services', path: '/services' }
-    ]
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isDarkSection, setIsDarkSection] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const arrowRef = useRef(null);
 
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isVisible, setIsVisible] = useState(true);
-    const [isDarkSection, setIsDarkSection] = useState(false);
-    const [isTransparent, setIsTransparent] = useState(false);
-    const location = useLocation();
-    const navigate = useNavigate();
-
-    // dark and transparent section check
-    const checkSections = () => {
-        const darkSections = document.querySelectorAll('.dark-section');
-        const transparentSections = document.querySelectorAll('.transparent-section');
-        let isOverDarkSection = false;
-        let isOverTransparentSection = false;
-
-        darkSections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-            if (rect.top <= 90 && rect.bottom >= 0) {
-                isOverDarkSection = true;
-            }
-        });
-
-        transparentSections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-            if (rect.top <= 90 && rect.bottom >= 0) {
-                isOverTransparentSection = true;
-            }
-        });
-
-        setIsDarkSection(isOverDarkSection);
-        setIsTransparent(isOverTransparentSection);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 90);
+      setIsVisible(document.querySelector("footer")?.getBoundingClientRect().top >= window.innerHeight * 0.5);
     };
 
-    // Run on route changes
-    useEffect(() => {
-        setTimeout(checkSections, 0);
-    }, [location.pathname]);
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    // Run on scroll
-    useEffect(() => {
-        const handleScroll = () => {
-            const heroSection = document.querySelector('section');
-            if (heroSection) {
-                const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-                const scrollPosition = window.scrollY;
-                
-                if (scrollPosition > heroBottom - 90) {
-                    setIsScrolled(true);
-                } else {
-                    setIsScrolled(false);
-                }
-            }
+  const handleArrowAnimation = (enter) => {
+    gsap.to(arrowRef.current, {
+      rotate: enter ? 0 : -45,
+      scale: enter ? 1.2 : 1,
+      duration: 0.1,
+      ease: enter ? "bounce.in" : "bounce.out",
+    });
+  };
 
-            checkSections();
+  return (
+    <nav className={`fixed w-full flex justify-between items-center z-[99] px-8 md:px-20 transition-all duration-300 
+        ${isScrolled ? "text-[1rem] h-[60px]" : "text-[1.2rem] h-[90px]"}
+        ${isVisible ? "translate-y-0" : "-translate-y-full"}
+        ${isDarkSection ? "bg-[#171717] text-white" : "bg-white text-black"}
+      `}
+    >
+      {/* Logo */}
+      <Link to="/">
+        <img
+          src={earth}
+          alt="earth"
+          className={`transition-all duration-300 ${isScrolled ? "w-8 h-8" : "w-10 h-10"}`}
+        />
+      </Link>
 
-            // Footer visibility logic
-            const footer = document.querySelector('footer');
-            if (footer) {
-                const footerRect = footer.getBoundingClientRect();
-                const viewportHeight = window.innerHeight;
-                
-                if (footerRect.top < viewportHeight * 0.5) {
-                    setIsVisible(false);
-                } else {
-                    setIsVisible(true);
-                }
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
-        
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    {/* Link hover animation */}
-    const handleLinkEnter = (index) => {
-
-        const link = document.querySelector(`.link-${index}`);
-
-        gsap.to(link, {
-            y: isScrolled? 25 : 27,
-            duration: 0.5,
-        })
-
-    }
-
-    {/* Link leave animation */}
-    const handleLinkLeave = (index) => {
-
-        const link = document.querySelector(`.link-${index}`); 
-
-        gsap.to(link, {
-            y: 0,
-            duration: 0.5,
-        })
-
-    }
-
-    const arrowRef = useRef(null)
-
-    // Button hover animation
-    const handleArrowEnter = () => {
-        const arrow  = arrowRef.current
-
-        gsap.to(arrow, {
-            rotate: 0,
-            duration: 0.1,
-            scale: 1.2,
-            ease: 'bounce.in'
-        })
-
-    }
-
-    // Button leave animation
-    const handleArrowLeave = () => {
-        const arrow = arrowRef.current
-
-        gsap.to(arrow, {
-            rotate: -45,
-            duration: 0.1,
-            scale: 1,
-            ease: 'bounce.out',
-        })
-
-    }
-
-    const handleNavigation = (path, e) => {
-        e.preventDefault();
-        
-        // Animate current page up
-        gsap.to('.page-content', {
-          y: '-100%',
-          duration: 0.6,
-          ease: 'power4.inOut',
-          onComplete: () => {
-            navigate(path);
-            window.scrollTo(0, 0);
-          }
-        });
-    };
-
-    return (
-        <nav 
-            className={`fixed w-full flex justify-between items-center z-[99] px-20 transition-all duration-300 
-                ${isScrolled ? 'text-[1rem] h-[60px]' : 'text-[1.2rem] h-[90px]'}
-                ${isVisible ? 'translate-y-0' : '-translate-y-full'}
-                ${isTransparent 
-                    ? 'bg-transparent text-white' 
-                    : isDarkSection 
-                        ? 'bg-[#171717] text-white' 
-                        : 'bg-white text-black'
-                }
-            `}
-        >
-
-            <ul className="flex items-center space-x-10 px-2">
-                <li className="mr-10">
-                    <img 
-                        src={earth} 
-                        alt="earth" 
-                        className={`transition-all duration-300 
-                            ${isScrolled ? 'w-8 h-8' : 'w-10 h-10'}
-                        `}
-                    />
-                </li>
-                {navLinks.map((link, index) => (
-                    <li className="overflow-hidden">
-                        <Link 
-                            to={link.path} 
-                            key={index} 
-                            className={`link-${index} flex flex-col justify-end items-center ${
-                                isScrolled ? 'h-[20px]' : 'h-[30px]'
-                            }`} 
-                            onMouseEnter={() => handleLinkEnter(index)} 
-                            onMouseLeave={() => handleLinkLeave(index)}
-                            onClick={(e) => handleNavigation(link.path, e)}
-                        >
-                            <p>{link.name}</p>
-                            <p>{link.name}</p>
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-
-            <Link 
-                to="/contact" 
-                onMouseEnter={() => handleArrowEnter()} 
-                onMouseLeave={() => handleArrowLeave()} 
-                className={`relative rounded-full flex items-center gap-2 transition-all duration-300 group overflow-hidden
-                    ${isTransparent || isDarkSection
-                        ? 'bg-white text-black hover:bg-[#f0ff75]' 
-                        : 'bg-black text-white hover:bg-[#f0ff75] hover:text-black'
-                    }
-                    ${isScrolled ? 'px-4 py-2' : 'px-5 py-3'}
-                `}
-            >
-                {/* Text & Icon Container (Above Background Effect) */}
-                <span className="relative z-10 flex items-center gap-2">
-                    Let's Talk
-                    <ArrowRight 
-                        ref={arrowRef} 
-                        className={`arrow -rotate-45 transition-all duration-300 ${
-                            isScrolled ? 'w-4 h-4' : 'w-5 h-5'
-                        }`} 
-                    />
-                </span>
-                    
+      {/* Desktop Nav Links */}
+      <ul className="hidden md:flex items-center space-x-10 px-2">
+        {navLinks.map((link, index) => (
+          <li key={index} className="relative group">
+            <Link to={link.path} className="hover:text-gray-500 transition-all">
+              {link.name}
             </Link>
+            {link.dropdown && (
+              <ul className="absolute left-0 hidden group-hover:block bg-white text-black shadow-lg py-2 w-40">
+                {link.dropdown.map((item, idx) => (
+                  <li key={idx} className="px-4 py-2 hover:bg-gray-200">
+                    <Link to={`/${item.toLowerCase().replace(/ /g, "-")}`}>{item}</Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
 
-        </nav>
-    )
-}
+      {/* Social Links */}
+      <div className="hidden md:flex space-x-4">
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <FaLinkedin className="text-blue-600 text-xl hover:scale-110 transition-transform" />
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <FaInstagram className="text-pink-600 text-xl hover:scale-110 transition-transform" />
+        </a>
+      </div>
 
-export default Navbar
+      {/* Contact Button */}
+      <Link to="/contact" onMouseEnter={() => handleArrowAnimation(true)} onMouseLeave={() => handleArrowAnimation(false)}
+        className="hidden md:flex items-center gap-2 px-5 py-3 rounded-full transition-all duration-300 bg-black text-white hover:bg-[#f0ff75] hover:text-black"
+      >
+        Let's Talk
+        <ArrowRight ref={arrowRef} className="-rotate-45 transition-all duration-300 w-5 h-5" />
+      </Link>
+
+      {/* Mobile Menu */}
+      <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        {mobileMenuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
+      </button>
+
+      {/* Mobile Menu Content */}
+      {mobileMenuOpen && (
+        <ul className="absolute top-[60px] left-0 w-full bg-white text-black flex flex-col space-y-4 p-6 shadow-lg md:hidden">
+          {navLinks.map((link, index) => (
+            <li key={index}>
+              <Link to={link.path} onClick={() => setMobileMenuOpen(false)}>
+                {link.name}
+              </Link>
+            </li>
+          ))}
+          <div className="flex space-x-4 mt-4">
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <FaLinkedin className="text-blue-600 text-xl" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+              <FaInstagram className="text-pink-600 text-xl" />
+            </a>
+          </div>
+        </ul>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;

@@ -1,16 +1,42 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import Sagar from "../assets/Sagar.jpg";
 import harshaImage from "../assets/HarshaAdithyaKumar.jpg";
+import Rohan from "../assets/Rohan.jpg";
 
 const teamMembers = [
-  { name: "Sagar K", role: "CTO", image: Sagar },
-  { name: "Harsha AdithyaKumar", role: "CTO", image: harshaImage },
-  { name: "Mike Johnson", role: "Creative Director", image: "/placeholder.svg" },
-  { name: "Sarah Brown", role: "Marketing Head", image: "/placeholder.svg" },
+  { 
+    name: "Rohan", 
+    role: "CEO", 
+    image: Rohan,
+    linkedin: "https://www.linkedin.com/in/rohanrjedu/", 
+    instagram: "https://www.instagram.com/_its_rj_2" 
+  },
+  { 
+    name: "Sagar K", 
+    role: "CTO", 
+    image: Sagar,
+    linkedin: "https://linkedin.com/in/sagarkpoojary", 
+    instagram: "https://instagram.com/sagarrpoojaryy" 
+  },
+  { 
+    name: "Harsha AdithyaKumar", 
+    role: "CIO", 
+    image: harshaImage,
+    linkedin: "https://linkedin.com/in/harsha", 
+    instagram: "https://instagram.com/harsha" 
+  },
+  { 
+    name: "Placeholder", 
+    role: "Marketing Head", 
+    image: "/placeholder.svg",
+    linkedin: "#", 
+    instagram: "#" 
+  },
 ];
 
-const About = () => {
+const About = (props) => {
   return (
     <div className="bg-[#F7F5F4] text-gray-900">
       {/* Hero Section */}
@@ -69,6 +95,9 @@ const About = () => {
         >
           Meet Our Team
         </motion.h2>
+        <p className="mt-4 text-lg max-w-2xl mx-auto text-gray-600 text-center">
+          Our team is a diverse group of passionate individuals, each bringing unique skills and perspectives to the table. Together, we strive to push boundaries and redefine excellence in our fields.
+        </p>
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
           {teamMembers.map((member, index) => (
             <motion.div

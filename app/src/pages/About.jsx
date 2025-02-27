@@ -161,8 +161,8 @@ const About = (props) => {
             </motion.div>
           ))}
         </div>
-      </section>
-    </div>
+        </motion.section>
+        </div>
   );
 };
 

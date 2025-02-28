@@ -8,22 +8,53 @@ import Contact from "./pages/Contact"
 import SmoothScroll from "./SmoothScroll"
 import Footer from "./components/Footer"
 import ScrollToTop from './components/ScrollToTop'
+import Page404 from './pages/404'
+
+function MainLayout({ children }) {
+  return (
+    <SmoothScroll>
+      <Navbar />
+      {children}
+      <Footer />
+    </SmoothScroll>
+  );
+}
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
-      <SmoothScroll>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/divisions" element={<Divisions />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-        <Footer />
-      </SmoothScroll>
+      <Routes>
+        {/* Routes with Navbar and Footer */}
+        <Route path="/" element={
+          <MainLayout>
+            <Home />
+          </MainLayout>
+        } />
+        <Route path="/about" element={
+          <MainLayout>
+            <About />
+          </MainLayout>
+        } />
+        <Route path="/divisions" element={
+          <MainLayout>
+            <Divisions />
+          </MainLayout>
+        } />
+        <Route path="/services" element={
+          <MainLayout>
+            <Services />
+          </MainLayout>
+        } />
+        <Route path="/contact" element={
+          <Contact />
+        } />
+        
+        {/* NotFound route without Navbar and Footer */}
+        <Route path="*" element={
+          <Page404 />
+        } />
+      </Routes>
     </Router>
   )
 }

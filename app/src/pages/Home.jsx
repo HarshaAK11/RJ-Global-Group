@@ -203,7 +203,7 @@ function Home() {
             </div>
             ) : (
               /* Services Link */
-              <Link to='/Services' >
+              <Link to='/Divisions' >
                 <div key={service} className="flex items-center space-x-4 bg-[#F3F4EE] hover:bg-[#f0ff75] p-10 rounded-lg h-[50vh] transition-all duration-300">
                   <div className="flex flex-col justify-start h-full w-full">
                     <HyperText className="text-2xl">{service.name}</HyperText>

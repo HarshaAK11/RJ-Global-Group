@@ -38,10 +38,11 @@ const services = [
         "Product photography",
         "Motion graphics & animation"
     ]
-  }
+  },
 ]
 
 function Services() {
+  let stickyOffset = 45
   return (
     <div>
       
@@ -64,23 +65,21 @@ function Services() {
   
       </section>
 
-      <section className="p-16">
+      <section className="relative p-16">
 
-        <h1 className="text-7xl font-[500] my-[140px]"><span className="text-[grey]">Services</span> to<br/>fuel your <span className="text-[grey]">growth.</span></h1>
+        <h1 className="text-7xl font-[500] my-[140px] sticky top-[20%] min-h-[10rem]"><span className="text-[grey]">Services</span> to<br/>fuel your <span className="text-[grey]">growth.</span></h1>
 
         <div className="h-[210vh] flex flex-col justify-evenly">
-          {services.map((service) => (
-            <div key={service.category} className="mb-12">
-              <h2 className="text-4xl mb-4">{service.category}</h2>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {service.items.map((item) => (
-                  <li key={item} className="bg-gray-100 p-4 rounded-lg">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {services.map((service) => {
+            let currentOffset = stickyOffset
+            stickyOffset += 10
+            return(
+              <div key={service.category} className="mb-12 sticky">
+                <h2 className="text-5xl" style={{"top": `${currentOffset}%`}}>{service.category}</h2>
+              </div>
+            )
+          }
+        )}
         </div>
 
       </section>
@@ -90,4 +89,3 @@ function Services() {
 }
 
 export default Services
-

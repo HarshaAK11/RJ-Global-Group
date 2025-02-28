@@ -10,7 +10,6 @@ const Navbar = () => {
         { name: 'Home', path: '/' },
         { name: 'Know Us', path: '/about' },
         { name: 'Divisions', path: '/divisions' },
-        { name: 'Services', path: '/services' }
     ]
 
     const [isScrolled, setIsScrolled] = useState(false);

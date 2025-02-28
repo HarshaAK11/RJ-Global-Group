@@ -46,9 +46,6 @@ const Footer = () => {
                         <Link to="/divisions" className="">
                             Divisions
                         </Link>
-                        <Link to="/services" className="">
-                            Services
-                        </Link>
                     </div>
 
                     {/* Social Links */}
@@ -69,8 +66,8 @@ const Footer = () => {
                         <a href="mailto:rjglobalg@gmail.com" className="">
                             rjglobalg@gmail.com
                         </a>
-                        <a href="tel:+918590067082" className="">
-                            +91 8590067082
+                        <a href="tel:+918088018968" className="">
+                            +91 8088018968
                         </a>
                     </div>
 

@@ -1,13 +1,57 @@
-import React from "react"
+import React, { useState } from "react"
 import work from '../assets/work together.png'
 import { Instagram, Mail, Linkedin, ArrowLeft } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import Toaster from '../components/ui/Toaster'
 
 
 function Contact() {
   const navigate = useNavigate()
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState({ title: '', description: '' });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.target)
+
+    try {
+      const response = await fetch('http://localhost:3000/api/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          message: formData.get('message')
+        })
+      })
+
+      const data = await response.json()
+      console.log(data)
+
+      if (response.ok) {
+        setToastMessage({ title: 'Your message has been sent successfully', description: 'we will get back to you soon.' })
+        setShowToast(true)
+        e.target.reset()
+      } else {
+        setToastMessage({ title: 'Failed to send message', description: 'Please try again.' })
+        setShowToast(true)
+        console.error('Failed to send message')
+      }
+
+
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
     return (
-      <div className="h-screen flex items-start gap-16 py-16 px-[150px]">
+      <div className="h-screen flex items-start gap-16 py-20 px-[150px]">
+
+        {showToast && <Toaster title={toastMessage.title} description={toastMessage.description} onClose={() => setShowToast(false)} />}
+
         {/* Left Section */}
         <div className="flex-1 flex flex-col items-center">
           <h1 className="text-6xl font-semibold mb-8">What Can We Create Together?</h1>
@@ -18,7 +62,7 @@ function Contact() {
         {/* Right Section */}
         <div className="max-w-2xl flex-1 flex flex-col items-center">
 
-          <form className="space-y-6 p-8 rounded-xl border w-[500px] shadow-[0_0_8px_-5px_rgba(0,0,0,0.8)]">
+          <form className="space-y-6 p-8 rounded-xl border w-[500px] shadow-[0_0_8px_-5px_rgba(0,0,0,0.8)]" onSubmit={handleSubmit}>
             <h1 className="text-4xl font-semibold mb-4">Leave Us a Message</h1>
             <div>
               <label htmlFor="name" className="block mb-1">
@@ -58,7 +102,6 @@ function Contact() {
               </a>
             </div>
           </div>
-
         </div>
 
         <p onClick={() => navigate(-1)} className="absolute top-4 left-4 flex items-center gap-2 cursor-pointer"><ArrowLeft />Go Back</p>

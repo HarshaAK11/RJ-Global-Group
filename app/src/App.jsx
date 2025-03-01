@@ -9,6 +9,7 @@ import SmoothScroll from "./SmoothScroll"
 import Footer from "./components/Footer"
 import ScrollToTop from './components/ScrollToTop'
 import Page404 from './pages/404'
+import { Toaster } from "sonner"
 
 function MainLayout({ children }) {
   return (
@@ -24,6 +25,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <Toaster>
       <Routes>
         {/* Routes with Navbar and Footer */}
         <Route path="/" element={
@@ -55,6 +57,7 @@ function App() {
           <Page404 />
         } />
       </Routes>
+      </Toaster>
     </Router>
   )
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import Sagar from "../assets/Sagar.jpg";
 import harshaImage from "../assets/HarshaAdithyaKumar.jpg";
 import Rohan from "../assets/Rohan.jpg";
@@ -150,14 +149,7 @@ const About = (props) => {
               />
               <h3 className="text-xl font-semibold">{member.name}</h3>
               <p className="text-gray-600">{member.role}</p>
-              <div className="flex justify-center mt-4 space-x-4">
-                <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
-                  <FaLinkedin className="text-blue-600 text-2xl" />
-                </a>
-                <a href={member.instagram} target="_blank" rel="noopener noreferrer">
-                  <FaInstagram className="text-pink-600 text-2xl" />
-                </a>
-              </div>
+              
             </motion.div>
           ))}
         </div>

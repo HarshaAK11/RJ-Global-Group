@@ -14,19 +14,20 @@ const teamMembers = [
     instagram: "https://www.instagram.com/_its_rj_2" 
   },
   { 
-    name: "Sagar K", 
-    role: "UI/UX Developer", 
-    image: Sagar,
-    linkedin: "https://linkedin.com/in/sagarkpoojary", 
-    instagram: "https://instagram.com/sagarrpoojaryy" 
-  },
-  { 
     name: "Harsha AdithyaKumar", 
     role: "Co-founder, Lead Developer", 
     image: harshaImage,
     linkedin: "https://linkedin.com/in/harsha", 
     instagram: "https://instagram.com/harsha" 
   },
+  { 
+    name: "Sagar K", 
+    role: "UI/UX Developer", 
+    image: Sagar,
+    linkedin: "https://linkedin.com/in/sagarkpoojary", 
+    instagram: "https://instagram.com/sagarrpoojaryy" 
+  },
+  
   { 
     name: "Placeholder", 
     role: "Marketing Head", 

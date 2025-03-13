@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import logo from "../assets/earth.png"
 import gsap from "gsap"
-import { VelocityScroll } from '../components/magicui/scroll-based-velocity'
+import { VelocityScroll } from './ui/scroll-based-velocity'
 
 const Footer = () => {
     return (

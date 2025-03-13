@@ -14,11 +14,14 @@ const SmoothScroll = ({ children }) => {
         smooth: true,
         multiplier: 1,
       });
-    }
+    } 
+
+    window.LocomotiveScroll = scrollInstance
 
     return () => {
       if (scrollInstance) {
-        scrollInstance.destroy();
+        scrollInstance.destroy()
+        window.LocomotiveScroll = null 
       }
     };
   }, [containerRef]); 

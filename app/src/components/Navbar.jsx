@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import earth from "../assets/earth.png";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Minus } from "lucide-react";
 import gsap from "gsap";
+import Menu from "./Menu";
 
 const Navbar = () => {
     const navLinks = [
@@ -15,6 +16,7 @@ const Navbar = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [isDarkSection, setIsDarkSection] = useState(false);
     const [isTransparent, setIsTransparent] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
     const arrowRef = useRef(null);
@@ -128,6 +130,25 @@ const Navbar = () => {
 
     const handleNavigation = (path, e) => {
         e.preventDefault();
+
+        const curtain = document.querySelector('.transition-curtain');
+        
+        gsap.timeline()
+          .to(curtain, {
+            y: '0%',
+            duration: 0.6,
+            ease: 'power4.inOut',
+          })
+          .to(curtain, {
+            y: '-100%',
+            duration: 0.6,
+            delay: 0.3,
+            ease: 'power4.inOut',
+            onComplete: () => {
+                navigate(path);
+                window.scrollTo(0, 0);
+            }
+          });
         
         // Animate current page up
         gsap.to('.page-content', {
@@ -141,71 +162,111 @@ const Navbar = () => {
         });
     };
 
+    // Cancel and resume scroll
+    const scrollHandling = () => {
+        setIsMenuOpen(!isMenuOpen)
+        isMenuOpen ? window.LocomotiveScroll.start() : window.LocomotiveScroll.stop()
+    }
+
     return (
-        <nav 
-            className={`fixed w-full flex justify-between items-center z-[99] px-20 transition-all duration-300 
-                ${isScrolled ? 'text-[1rem] h-[60px]' : 'text-[1.2rem] h-[90px]'}
-                ${isVisible ? 'translate-y-0' : '-translate-y-full'}
-                ${isTransparent 
-                    ? 'bg-transparent text-white' 
-                    : isDarkSection 
-                        ? 'bg-[#171717] text-white' 
-                        : 'bg-white text-black'
-                }
-            `}
-        >
-            <ul className="flex items-center space-x-10 px-2">
-                <li className="mr-10">
+        <>
+
+            {/* Curtain */}
+            <div className="transition-curtain fixed inset-0 bg-black z-[100] transform -translate-y-full"></div>
+
+            <nav 
+                className={`fixed w-full flex justify-between items-center z-[99] px-20 transition-all duration-300 
+                    ${isScrolled ? 'text-[1rem] h-[60px]' : 'text-[1.2rem] h-[90px]'}
+                    ${isVisible ? 'translate-y-0' : '-translate-y-full'}
+                    ${isTransparent 
+                        ? 'bg-transparent text-white' 
+                        : isDarkSection 
+                            ? 'bg-[#171717] text-white' 
+                            : 'bg-white text-black'
+                    }
+                `}
+            >
+
+                <div className="flex items-center gap-20">
+                    {/* Logo */}
                     <img 
                         src={earth} 
                         alt="earth" 
                         className={`transition-all duration-300 
                             ${isScrolled ? 'w-8 h-8' : 'w-10 h-10'}
                         `}
-                    />
-                </li>
-                {navLinks.map((link, index) => (
-                    <li className="overflow-hidden" key={index}>
-                        <Link 
-                            to={link.path}
-                            className={`link-${index} flex flex-col justify-end items-center ${
-                                isScrolled ? 'h-[20px]' : 'h-[30px]'
-                            }`} 
-                            onMouseEnter={() => handleLinkEnter(index)} 
-                            onMouseLeave={() => handleLinkLeave(index)}
-                            onClick={(e) => handleNavigation(link.path, e)}
-                        >
-                            <p>{link.name}</p>
-                            <p>{link.name}</p>
-                        </Link>
-                    </li>
-                ))}
-            </ul>
+                    />  
 
-            <Link 
-                to="/contact" 
-                onMouseEnter={handleArrowEnter} 
-                onMouseLeave={handleArrowLeave} 
-                className={`relative rounded-full flex items-center gap-2 transition-all duration-300 group overflow-hidden
-                    ${isTransparent || isDarkSection
-                        ? 'bg-white text-black hover:bg-[#f0ff75]' 
-                        : 'bg-black text-white hover:bg-[#f0ff75] hover:text-black'
-                    }
-                    ${isScrolled ? 'px-4 py-2' : 'px-5 py-3'}
-                `}
-            >
-                {/* Text & Icon Container (Above Background Effect) */}
-                <span className="relative z-10 flex items-center gap-2">
-                    Let's Talk
-                    <ArrowRight 
-                        ref={arrowRef} 
-                        className={`arrow -rotate-45 transition-all duration-300 ${
-                            isScrolled ? 'w-4 h-4' : 'w-5 h-5'
-                        }`} 
-                    />
-                </span>
-            </Link>
-        </nav>
+                    
+                    
+                    <ul className="flex items-center space-x-10 px-2 max-md:hidden">
+                        {navLinks.map((link, index) => (
+                            <li className="overflow-hidden" key={index}>
+                                <Link 
+                                    to={link.path}
+                                    className={`link-${index} flex flex-col justify-end items-center ${
+                                        isScrolled ? 'h-[20px]' : 'h-[30px]'
+                                    }`} 
+                                    onMouseEnter={() => handleLinkEnter(index)} 
+                                    onMouseLeave={() => handleLinkLeave(index)}
+                                    onClick={(e) => handleNavigation(link.path, e)}
+                                >
+                                    <p>{link.name}</p>
+                                    <p>{link.name}</p>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <Link 
+                    to="/contact" 
+                    onMouseEnter={handleArrowEnter} 
+                    onMouseLeave={handleArrowLeave} 
+                    className={`relative rounded-full flex items-center gap-2 transition-all duration-300 group overflow-hidden max-md:hidden
+                        ${isTransparent || isDarkSection
+                            ? 'bg-white text-black hover:bg-[#f0ff75]' 
+                            : 'bg-black text-white hover:bg-[#f0ff75] hover:text-black'
+                        }
+                        ${isScrolled ? 'px-4 py-2' : 'px-5 py-3'}
+                    `}
+                >
+                    {/* Text & Icon Container (Above Background Effect) */}
+                    <span className="relative z-10 flex items-center gap-2">
+                        Let's Talk
+                        <ArrowRight 
+                            ref={arrowRef} 
+                            className={`arrow -rotate-45 transition-all duration-300 ${
+                                isScrolled ? 'w-4 h-4' : 'w-5 h-5'
+                            }`} 
+                        />
+                    </span>
+                </Link>
+
+                {/* Hamburger menu */}
+                <div 
+                    className={`relative w-12 h-12 rounded-full flex flex-col bg-[#F3F4EE] items-center justify-evenly cursor-pointer transform hidden max-md:block transition-all duration-300
+                        ${isScrolled ? 'scale-[0.8]' : 'scale-1'}
+                    `}
+
+                    onClick={() => {
+                        scrollHandling()
+                        sty
+                    }}
+                >
+                    <Minus className="absolute top-[15px] left-1/2 -translate-x-1/2" />
+                    <Minus className="absolute bottom-[15px] left-1/2 -translate-x-1/2" />
+                </div>
+            </nav>
+
+            {/* Mobile Menu */}
+            <Menu className={`
+                ${isMenuOpen ? `top-0 ${isScrolled ? 'pt-[60px]' : 'pt-[90px]'}` : 'top-[-100%]'}    
+                `} 
+
+                setIsMenuOpen={setIsMenuOpen}
+            />
+        </>
     );
 };
 

@@ -3,7 +3,7 @@
 import React, { forwardRef, useRef } from "react";
 
 import { cn } from "@/lib/utils";
-import { AnimatedBeam } from "./magicui/animated-beam";
+import { AnimatedBeam } from "./ui/animated-beam";
 
 const Circle = forwardRef(({ className, children }, ref) => {
   return (

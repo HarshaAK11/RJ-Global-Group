@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom"
 import logo from '../assets/RJ.png'
 import { cn } from "@/lib/utils";
-import { DotPattern } from "../components/magicui/dot-pattern"
-import { TextReveal } from "../components/magicui/text-reveal"
+import { DotPattern } from "../components/ui/dot-pattern"
+import { TextReveal } from "../components/ui/text-reveal"
 import { ArrowRight } from "lucide-react"
 import { useTheme } from "next-themes";
-import { MagicCard } from "../components/magicui/magic-card";
+import { MagicCard } from "../components/ui/magic-card";
 import DivisionTree from "../components/DivisionTree";
-import { HyperText } from "../components/magicui/hyper-text"
+import { HyperText } from "../components/ui/hyper-text"
 import more from '../assets/more.png'
 import whyUsBg from '../assets/why us(bg).jpg'
 import gsap from "gsap"

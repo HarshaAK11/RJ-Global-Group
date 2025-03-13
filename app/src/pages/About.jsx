@@ -38,6 +38,7 @@ const teamMembers = [
 
 const About = (props) => {
   return (
+
     <div id="about" className="bg-gray-200 text-gray-900">
       <div className="container mx-auto px-6 py-16">
         <div className="flex flex-col md:flex-row items-center">

@@ -53,8 +53,8 @@ function Contact() {
         {showToast && <Toaster title={toastMessage.title} description={toastMessage.description} onClose={() => setShowToast(false)} />}
 
         {/* Left Section */}
-        <div className="flex-1 flex flex-col items-center">
-          <h1 className="text-6xl font-semibold mb-8">What Can We Create Together?</h1>
+        <div className="flex-1 flex flex-col items-center ">
+          <h1 className="text-5xl font-semibold mb-8">What Can<br/>We Create Together?</h1>
           <h2 className="text-[grey]">Every great project starts with a conversation. Share your thoughts, and let's explore the possibilities of what we can achieve for you.</h2>
           <img src={work} alt="Work Together" className="size-[25rem] mt-14" />
         </div>

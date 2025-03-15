@@ -3,7 +3,7 @@ import logo from '../assets/RJ.png'
 import { cn } from "@/lib/utils";
 import { DotPattern } from "../components/ui/dot-pattern"
 import { TextReveal } from "../components/ui/text-reveal"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Infinity } from "lucide-react"
 import { useTheme } from "next-themes";
 import { MagicCard } from "../components/ui/magic-card";
 import DivisionTree from "../components/DivisionTree";
@@ -105,7 +105,7 @@ function Home() {
       description: " Elevating brands with strategic online growth.",
     },
     {
-      name: "Know more....",
+      name: "and more....",
       description: null
     }
   ]
@@ -141,7 +141,10 @@ function Home() {
             <div className="w-[65%] flex flex-col items-start justify-center tracking-tighter">
 
               {/* Brief Introduction Text */}
-              <TextReveal text="RJ Global Groups is a diverse company focused on innovation and excellence across multiple industries, specializing in transforming your ideas into digital solutions." />
+              <TextReveal 
+                text="RJ Global Groups is a diverse company focused on innovation and excellence across multiple industries, specializing in transforming your ideas into digital solutions." 
+                className='text-xl md:text-3xl lg:text-4xl xl:text-5xl'
+              />
 
               {/* About Us Link */}
               <div className="relative flex items-center mt-10 pb-1 ml-3 group overflow-hidden">
@@ -196,6 +199,7 @@ function Home() {
             index !== 3 ? (
             <div key={service} className="flex items-center space-x-4 bg-[#F3F4EE] p-10 rounded-lg h-[50vh]">
                 <div className="flex flex-col justify-center h-full w-full">
+                  <h1 className="text-6xl mb-4">0{index + 1}</h1>
                   <HyperText className="text-2xl h-[70%]">{service.name}</HyperText>
                 <hr className="w-full border-t border-gray-300 my-6" />
                 <p className="text-lg h-[30%]">{service.description}</p>
@@ -205,9 +209,9 @@ function Home() {
               /* Services Link */
               <Link to='/Divisions' >
                 <div key={service} className="flex items-center space-x-4 bg-[#F3F4EE] hover:bg-[#f0ff75] p-10 rounded-lg h-[50vh] transition-all duration-300">
-                  <div className="flex flex-col justify-start h-full w-full">
-                    <HyperText className="text-2xl">{service.name}</HyperText>
-                    <img src={more} alt="more" className="translate-y-5" />
+                  <div className="flex flex-col gap-6 items-center h-full w-full">
+                    <img src={more} alt="more" className="translate-y-5 -mt-6" />
+                    <HyperText className="flex-1 text-2xl">{service.name}</HyperText>
                   </div>
                 </div>
               </Link>

@@ -13,8 +13,8 @@ export const TextReveal = ({ text, className }) => {
   const words = text.split(" ");
 
   return (
-    <div ref={targetRef} className={cn("relative min-h-[30vh]", className)}>
-      <p className="flex flex-wrap text-xl md:text-3xl lg:text-4xl xl:text-5xl">
+    <div ref={targetRef} className="relative min-h-[30vh]">
+      <p className={`flex flex-wrap ${className}`}>
         {words.map((word, i) => {
           const start = i / words.length;
           const end = start + 1 / words.length;
